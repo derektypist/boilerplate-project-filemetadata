@@ -21,3 +21,14 @@ app.get('/hello', function(req, res){
 app.listen(process.env.PORT || 3000, function () {
   console.log('Node.js listening ...');
 });
+
+let multer = require('multer');
+
+app.post('/api/fileanalyse', multer().single('upfile'), (request, response) => {
+  let responseObject = {};
+  responseObject['name'] = request.file.originalname;
+  responseObject['type'] = request.file.mimetype;
+  responseObject['size'] = request.file.size;
+
+  response.json(responseObject);
+});
